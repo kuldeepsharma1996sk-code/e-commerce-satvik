@@ -13,7 +13,7 @@ interface DailyRemedyCardProps {
 
 export default function DailyRemedyCard({ remedy }: DailyRemedyCardProps) {
     const shareToWhatsApp = () => {
-        const text = `✨ *Daily Remedy from Antigravity* ✨\n\n*${remedy.title}*\n${remedy.content}\n\nStart your day with purpose: https://antigravity.in`;
+        const text = `✨ *Daily Remedy from SATTVIK HOME* ✨\n\n*${remedy.title}*\n${remedy.content}\n\nStart your day with purpose: https://sattvikhomes.com`;
         window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
     };
 

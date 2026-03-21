@@ -69,7 +69,7 @@ export default function LoginPage() {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                placeholder="bhakt@amala.in"
+                                placeholder="bhakt@sattvikhomes.com"
                                 required
                                 className="w-full pl-11 pr-4 py-3.5 bg-white/80 border border-[#B5A642]/20 rounded-xl text-[#5D4037] placeholder:text-[#B5A642]/40 focus:outline-none focus:border-[#FF9933] transition-colors"
                             />
@@ -140,7 +140,7 @@ export default function LoginPage() {
                             Demo Credentials
                         </p>
                         <p className="text-xs text-[#5D4037]/60">
-                            <strong>Email:</strong> bhakt@amala.in
+                            <strong>Email:</strong> bhakt@sattvikhomes.com
                         </p>
                         <p className="text-xs text-[#5D4037]/60">
                             <strong>Password:</strong> Shanti123
@@ -149,7 +149,7 @@ export default function LoginPage() {
                 </form>
 
                 <p className="text-center text-xs text-[#5D4037]/40 mt-6">
-                    New to Antigravity?{" "}
+                    New to SATTVIK HOME?{" "}
                     <Link href="/collection" className="text-[#FF9933] font-semibold hover:underline">
                         Start Shopping
                     </Link>

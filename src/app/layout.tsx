@@ -8,7 +8,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Antigravity — Sacred Idols & Pooja Essentials",
+  title: "SATTVIK HOME — Sacred Idols & Pooja Essentials",
   description:
     "Authentic hand-crafted brass idols, pooja essentials, premium agarbatti, and daily spiritual guidance. Bridge ancient wisdom with modern living.",
   keywords: [
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     "Daily Remedy",
   ],
   openGraph: {
-    title: "Antigravity — Sacred Idols & Pooja Essentials",
+    title: "SATTVIK HOME — Sacred Idols & Pooja Essentials",
     description:
       "Authentic hand-crafted brass idols, pooja essentials, and daily spiritual guidance.",
     type: "website",
