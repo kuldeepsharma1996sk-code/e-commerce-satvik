@@ -26,10 +26,10 @@ export default function Header() {
                         {/* Logo */}
                         <Link href="/" className="flex items-center gap-2">
                             <div className="w-8 h-8 bg-[#FF9933] rounded-full flex items-center justify-center">
-                                <span className="text-white font-serif font-bold text-sm">S</span>
+                                <span className="text-white font-serif font-bold text-sm">A</span>
                             </div>
                             <span className="text-xl md:text-2xl font-serif font-bold text-[#5D4037] tracking-tight">
-                                SATTVIK HOME
+                                Antigravity
                             </span>
                         </Link>
 

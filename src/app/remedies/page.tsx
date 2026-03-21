@@ -13,7 +13,7 @@ export default function RemediesPage() {
     const selectedPrediction = rashiPredictions.find((r) => r.rashi === selectedRashi);
 
     const shareRemedy = () => {
-        const text = `✨ *Daily Remedy from SATTVIK HOME* ✨\n\n*${todaysRemedy.title}*\n${todaysRemedy.content}\n\nRead more: https://sattvikhomes.com/remedies`;
+        const text = `✨ *Daily Remedy from Antigravity* ✨\n\n*${todaysRemedy.title}*\n${todaysRemedy.content}\n\nRead more: https://antigravity.in/remedies`;
         if (navigator.share) {
             navigator.share({ title: "Today's Remedy", text }).catch(() => { });
         } else {
