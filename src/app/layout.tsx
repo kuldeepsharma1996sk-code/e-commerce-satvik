@@ -1,3 +1,4 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { cormorant, inter } from "@/lib/fonts";
 import Header from "@/components/layout/Header";
@@ -5,7 +6,6 @@ import Footer from "@/components/layout/Footer";
 import MobileNav from "@/components/layout/MobileNav";
 import { CartProvider } from "@/context/CartContext";
 import { AuthProvider } from "@/context/AuthContext";
-import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Satvik Home — Sacred Idols & Pooja Essentials",
