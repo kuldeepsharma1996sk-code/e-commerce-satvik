@@ -104,7 +104,11 @@ export default function HomePage() {
                 <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#C2B280]/20 to-[#FF9933]/10 animate-breath" />
                 <div className="absolute inset-8 rounded-full bg-gradient-to-br from-[#F9F6F0] to-white/80 flex items-center justify-center">
                   <div className="text-center">
-                    <span className="text-8xl">🙏</span>
+                    <img 
+                      src="/images/ganesha-hero.png" 
+                      alt="Ganesha Idol" 
+                      className="h-64 w-auto object-contain mx-auto transition-transform hover:scale-110 duration-700 pointer-events-none select-none"
+                    />
                     <p className="text-sm text-[#B5A642] mt-4 font-serif italic">
                       Begin your sacred journey
                     </p>
