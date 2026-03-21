@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const footerLinks = {
     Shop: [
@@ -23,6 +26,9 @@ const footerLinks = {
 };
 
 export default function Footer() {
+    const pathname = usePathname();
+    const isInternal = pathname.startsWith("/admin");
+    if (isInternal) return null;
     return (
         <footer className="bg-[#2D2A26] text-white/70 pb-24 md:pb-8">
             {/* Newsletter */}
@@ -55,10 +61,10 @@ export default function Footer() {
                     <div className="col-span-2 md:col-span-1">
                         <div className="flex items-center gap-2 mb-4">
                             <div className="w-8 h-8 bg-[#FF9933] rounded-full flex items-center justify-center">
-                                <span className="text-white font-serif font-bold text-sm">A</span>
+                                <span className="text-white font-serif font-bold text-sm">S</span>
                             </div>
                             <span className="text-xl font-serif font-bold text-white">
-                                Antigravity
+                                Satvik Home
                             </span>
                         </div>
                         <p className="text-sm text-white/50 leading-relaxed">
@@ -92,7 +98,7 @@ export default function Footer() {
                 {/* Bottom Bar */}
                 <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-xs text-white/30">
-                        © 2026 Antigravity. All rights reserved. Made with devotion in India.
+                        © 2026 Satvik Home. All rights reserved. Made with devotion in India.
                     </p>
                     <div className="flex gap-4 text-xs text-white/30">
                         <Link href="#" className="hover:text-white/60">Privacy Policy</Link>

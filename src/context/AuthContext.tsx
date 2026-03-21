@@ -7,6 +7,7 @@ interface User {
     name: string;
     rashi: string;
     phone: string;
+    isAdmin?: boolean;
 }
 
 interface Order {
@@ -40,6 +41,7 @@ interface AuthContextType {
     user: User | null;
     isAuthenticated: boolean;
     login: (email: string, password: string) => boolean;
+    adminLogin: (email: string, password: string) => boolean;
     logout: () => void;
     orders: Order[];
     rituals: RitualProgress[];
@@ -58,6 +60,16 @@ const DEMO_USER: User = {
 };
 
 const DEMO_PASSWORD = "Shanti123";
+
+const DEMO_ADMIN: User = {
+    email: "admin@satvikhome.com",
+    name: "Admin Prabhu",
+    rashi: "Simha",
+    phone: "9999999999",
+    isAdmin: true,
+};
+
+const ADMIN_PASSWORD = "AdminSecure123";
 
 const DEMO_ORDERS: Order[] = [
     {
@@ -133,6 +145,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return false;
     }, []);
 
+    const adminLogin = useCallback((email: string, password: string): boolean => {
+        if (email === DEMO_ADMIN.email && password === ADMIN_PASSWORD) {
+            setUser(DEMO_ADMIN);
+            return true;
+        }
+        return false;
+    }, []);
+
     const logout = useCallback(() => {
         setUser(null);
     }, []);
@@ -165,6 +185,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 user,
                 isAuthenticated: !!user,
                 login,
+                adminLogin,
                 logout,
                 orders,
                 rituals,

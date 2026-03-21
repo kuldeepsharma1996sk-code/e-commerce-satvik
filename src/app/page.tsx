@@ -107,7 +107,7 @@ export default function HomePage() {
                     <img 
                       src="/images/ganesha-hero.png" 
                       alt="Ganesha Idol" 
-                      className="h-64 w-auto object-contain mx-auto transition-transform hover:scale-110 duration-700 pointer-events-none select-none"
+                      className="h-64 w-auto object-contain mx-auto transition-transform hover:scale-110 duration-700 pointer-events-none select-none mix-blend-multiply"
                     />
                     <p className="text-sm text-[#B5A642] mt-4 font-serif italic">
                       Begin your sacred journey

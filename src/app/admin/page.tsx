@@ -1,273 +1,177 @@
 "use client";
 
-import AdminShell from "@/components/admin/AdminShell";
-import {
-    TrendingUp,
-    TrendingDown,
-    Flame,
-    Leaf,
-    ShieldAlert,
-    Package,
-    Users,
-    IndianRupee,
-    ArrowUpRight,
+import { motion } from "framer-motion";
+import { 
+  Users, 
+  ShoppingBag, 
+  TrendingUp, 
+  Package, 
+  Search,
+  Plus,
+  MoreVertical,
+  LogOut
 } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import Link from "next/link";
 
-const METRICS = [
-    {
-        label: "Daily Sales",
-        value: "₹42,500",
-        trend: "+12%",
-        trendUp: true,
-        icon: IndianRupee,
-        color: "text-[#FF9933]",
-        bg: "bg-[#FF9933]/10",
-    },
-    {
-        label: "Active 21-Day Rituals",
-        value: "1,240",
-        trend: "High Engagement",
-        trendUp: true,
-        icon: Flame,
-        color: "text-orange-500",
-        bg: "bg-orange-50",
-    },
-    {
-        label: "New Subscriptions",
-        value: "18 Today",
-        trend: "Eternal Fragrance",
-        trendUp: true,
-        icon: Leaf,
-        color: "text-green-600",
-        bg: "bg-green-50",
-    },
-    {
-        label: "Failed OTPs",
-        value: "2",
-        trend: "Low Friction",
-        trendUp: false,
-        icon: ShieldAlert,
-        color: "text-blue-500",
-        bg: "bg-blue-50",
-    },
-];
+export default function AdminDashboardPage() {
+    const { user, logout } = useAuth();
+    const router = useRouter();
 
-const RECENT_ORDERS = [
-    { id: "ORD-4521", customer: "Priya M.", product: "Ganesh Ji Brass Idol (12\")", amount: "₹5,499", status: "Processing" },
-    { id: "ORD-4520", customer: "Rahul K.", product: "Sattva Premium Agarbatti × 2", amount: "₹998", status: "Shipped" },
-    { id: "ORD-4519", customer: "Anita S.", product: "Kuber Yantra + Brass Lota", amount: "₹3,298", status: "Delivered" },
-    { id: "ORD-4518", customer: "Vikram J.", product: "Dhan Vriddhi Remedy Kit", amount: "₹4,999", status: "Processing" },
-    { id: "ORD-4517", customer: "Meera D.", product: "Copper Puja Thali Set", amount: "₹1,299", status: "Delivered" },
-];
+    useEffect(() => {
+        if (!user?.isAdmin) {
+            router.push("/admin/login");
+        }
+    }, [user, router]);
 
-const RITUAL_ALERTS = [
-    { user: "Satvik S.", day: "Day 18/21", missed: false, lastActive: "Today" },
-    { user: "Kavita R.", day: "Day 9/21", missed: true, lastActive: "3 days ago" },
-    { user: "Amit P.", day: "Day 21/21", missed: false, lastActive: "Today" },
-    { user: "Deepa M.", day: "Day 5/21", missed: true, lastActive: "2 days ago" },
-];
+    if (!user?.isAdmin) return null;
 
-const TOP_PRODUCTS = [
-    { name: "Ganesh Ji Brass Idol", units: 42, revenue: "₹1,46,958" },
-    { name: "Sattva Premium Agarbatti", units: 128, revenue: "₹63,872" },
-    { name: "Dhan Vriddhi Remedy Kit", units: 31, revenue: "₹1,54,969" },
-    { name: "Copper Puja Thali Set", units: 67, revenue: "₹87,033" },
-];
+    const stats = [
+        { label: "Total Revenue", value: "₹4,12,000", change: "+12.5%", icon: TrendingUp, color: "text-emerald-500" },
+        { label: "Total Orders", value: "1,248", change: "+8.2%", icon: ShoppingBag, color: "text-orange-500" },
+        { label: "Active Users", value: "542", change: "+4.1%", icon: Users, color: "text-blue-500" },
+        { label: "Stock Items", value: "84", change: "Low: 3", icon: Package, color: "text-purple-500" },
+    ];
 
-export default function AdminDashboard() {
+    const recentOrders = [
+        { id: "#3041", customer: "Rajesh Kumar", date: "22 Mar, 2026", total: "₹2,499", status: "Processing" },
+        { id: "#3040", customer: "Pooja V.", date: "21 Mar, 2026", total: "₹1,299", status: "Shipped" },
+        { id: "#3039", customer: "Vikram S.", date: "21 Mar, 2026", total: "₹3,499", status: "Delivered" },
+        { id: "#3038", customer: "Anjali M.", date: "20 Mar, 2026", total: "₹799", status: "Delivered" },
+    ];
+
     return (
-        <AdminShell>
-            <div className="space-y-6">
-                {/* Header */}
-                <div>
-                    <h1 className="text-2xl font-serif text-[#5D4037]">Live Pulse</h1>
-                    <p className="text-xs text-[#B5A642]">
-                        Real-time overview of your Sattvic commerce engine
-                    </p>
+        <div className="min-h-screen bg-slate-50 flex">
+            {/* Sidebar */}
+            <aside className="w-64 bg-slate-900 text-white hidden lg:flex flex-col">
+                <div className="p-8">
+                    <h2 className="text-xl font-bold tracking-tight flex items-center gap-2">
+                        <span className="w-8 h-8 bg-[#FF9933] rounded-lg flex items-center justify-center text-xs">S</span>
+                        Satvik Admin
+                    </h2>
                 </div>
+                
+                <nav className="flex-1 px-4 space-y-2">
+                    <button className="w-full flex items-center gap-3 px-4 py-3 bg-white/10 rounded-xl text-sm font-semibold">
+                        <LayoutDashboard size={18} /> Dashboard
+                    </button>
+                    <button className="w-full flex items-center gap-3 px-4 py-3 text-white/50 hover:text-white rounded-xl text-sm font-semibold transition-all">
+                        <ShoppingBag size={18} /> Orders
+                    </button>
+                    <button className="w-full flex items-center gap-3 px-4 py-3 text-white/50 hover:text-white rounded-xl text-sm font-semibold transition-all">
+                        <Package size={18} /> Products
+                    </button>
+                    <button className="w-full flex items-center gap-3 px-4 py-3 text-white/50 hover:text-white rounded-xl text-sm font-semibold transition-all">
+                        <Users size={18} /> Customers
+                    </button>
+                </nav>
 
-                {/* Metric Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {METRICS.map((m) => (
-                        <div
-                            key={m.label}
-                            className="bg-white rounded-2xl border border-[#B5A642]/10 p-5"
-                        >
-                            <div className="flex items-center justify-between mb-3">
-                                <div className={`p-2 rounded-xl ${m.bg}`}>
-                                    <m.icon size={18} className={m.color} />
-                                </div>
-                                <div className="flex items-center gap-1 text-xs">
-                                    {m.trendUp ? (
-                                        <TrendingUp size={12} className="text-green-500" />
-                                    ) : (
-                                        <TrendingDown size={12} className="text-blue-500" />
-                                    )}
-                                    <span className={m.trendUp ? "text-green-600" : "text-blue-600"}>
-                                        {m.trend}
-                                    </span>
-                                </div>
-                            </div>
-                            <p className="text-2xl font-bold text-[#5D4037]">{m.value}</p>
-                            <p className="text-[10px] text-[#B5A642] uppercase tracking-wider mt-1">
-                                {m.label}
-                            </p>
+                <div className="p-4 border-t border-white/5">
+                    <button 
+                        onClick={() => { logout(); router.push("/admin/login"); }}
+                        className="w-full flex items-center gap-3 px-4 py-3 text-red-400 hover:text-red-300 rounded-xl text-sm font-semibold"
+                    >
+                        <LogOut size={18} /> Logout
+                    </button>
+                </div>
+            </aside>
+
+            {/* Main Content */}
+            <main className="flex-1 p-4 lg:p-12 overflow-y-auto">
+                <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
+                    <div>
+                        <h1 className="text-3xl font-bold text-slate-900">Dashboard Overview</h1>
+                        <p className="text-slate-500 text-sm mt-1">Welcome back, {user.name}</p>
+                    </div>
+                    
+                    <div className="flex items-center gap-3">
+                        <div className="relative">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                            <input 
+                                type="text" 
+                                placeholder="Search everything..." 
+                                className="pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-2xl text-sm focus:outline-none focus:border-slate-400 w-64"
+                            />
                         </div>
+                        <button className="p-2.5 bg-slate-900 text-white rounded-2xl hover:bg-slate-800 transition-colors">
+                            <Plus size={20} />
+                        </button>
+                    </div>
+                </header>
+
+                {/* Stats Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                    {stats.map((stat, i) => (
+                        <motion.div
+                            key={stat.label}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.1 }}
+                            className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm"
+                        >
+                            <div className="flex justify-between items-start mb-4">
+                                <div className={`p-3 rounded-2xl bg-slate-50 ${stat.color}`}>
+                                    <stat.icon size={20} />
+                                </div>
+                                <span className="text-[10px] font-bold text-emerald-500 bg-emerald-50 px-2 py-1 rounded-full">{stat.change}</span>
+                            </div>
+                            <h3 className="text-2xl font-bold text-slate-900">{stat.value}</h3>
+                            <p className="text-xs text-slate-400 font-semibold uppercase tracking-widest mt-1">{stat.label}</p>
+                        </motion.div>
                     ))}
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    {/* Recent Orders */}
-                    <div className="lg:col-span-2 bg-white rounded-2xl border border-[#B5A642]/10 p-5">
-                        <div className="flex items-center justify-between mb-4">
-                            <h3 className="font-serif text-lg text-[#5D4037]">Recent Orders</h3>
-                            <span className="text-[10px] text-[#B5A642] uppercase tracking-wider">
-                                Last 24h
-                            </span>
-                        </div>
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-sm">
-                                <thead>
-                                    <tr className="text-[10px] text-[#B5A642] uppercase tracking-wider border-b border-[#B5A642]/10">
-                                        <th className="text-left pb-2 font-semibold">Order</th>
-                                        <th className="text-left pb-2 font-semibold">Customer</th>
-                                        <th className="text-left pb-2 font-semibold hidden sm:table-cell">
-                                            Product
-                                        </th>
-                                        <th className="text-right pb-2 font-semibold">Amount</th>
-                                        <th className="text-right pb-2 font-semibold">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {RECENT_ORDERS.map((o) => (
-                                        <tr
-                                            key={o.id}
-                                            className="border-b border-[#B5A642]/5 last:border-0"
-                                        >
-                                            <td className="py-3 text-[#5D4037] font-medium">{o.id}</td>
-                                            <td className="py-3 text-[#5D4037]/70">{o.customer}</td>
-                                            <td className="py-3 text-[#5D4037]/60 hidden sm:table-cell text-xs">
-                                                {o.product}
-                                            </td>
-                                            <td className="py-3 text-right font-semibold text-[#FF9933]">
-                                                {o.amount}
-                                            </td>
-                                            <td className="py-3 text-right">
-                                                <span
-                                                    className={`text-[10px] font-bold uppercase px-2 py-1 rounded-full ${o.status === "Delivered"
-                                                            ? "bg-green-50 text-green-600"
-                                                            : o.status === "Shipped"
-                                                                ? "bg-blue-50 text-blue-600"
-                                                                : "bg-[#FF9933]/10 text-[#FF9933]"
-                                                        }`}
-                                                >
-                                                    {o.status}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                {/* Orders Table */}
+                <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden">
+                    <div className="p-6 border-b border-slate-100 flex items-center justify-between">
+                        <h3 className="font-bold text-slate-900">Recent Orders</h3>
+                        <button className="text-xs font-bold text-slate-400 hover:text-slate-900 uppercase tracking-widest">View All</button>
                     </div>
-
-                    {/* Ritual Alerts */}
-                    <div className="bg-white rounded-2xl border border-[#B5A642]/10 p-5">
-                        <div className="flex items-center justify-between mb-4">
-                            <h3 className="font-serif text-lg text-[#5D4037]">Ritual Alerts</h3>
-                            <Flame size={16} className="text-[#FF9933]" />
-                        </div>
-                        <div className="space-y-3">
-                            {RITUAL_ALERTS.map((r) => (
-                                <div
-                                    key={r.user}
-                                    className={`flex items-center justify-between p-3 rounded-xl ${r.missed ? "bg-red-50 border border-red-100" : "bg-[#F9F6F0]"
-                                        }`}
-                                >
-                                    <div>
-                                        <p className="text-sm font-medium text-[#5D4037]">{r.user}</p>
-                                        <p className="text-[10px] text-[#B5A642]">{r.day}</p>
-                                    </div>
-                                    <div className="text-right">
-                                        {r.missed ? (
-                                            <button className="text-[10px] font-bold text-red-500 bg-red-100 px-2 py-1 rounded-lg hover:bg-red-200 transition-colors">
-                                                Send Nudge
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left">
+                            <thead className="bg-slate-50/50">
+                                <tr>
+                                    <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Order ID</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Customer</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Date</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Total</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Status</th>
+                                    <th className="px-6 py-4"></th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-50">
+                                {recentOrders.map((order) => (
+                                    <tr key={order.id} className="hover:bg-slate-50/50 transition-colors">
+                                        <td className="px-6 py-4 text-sm font-bold text-slate-900">{order.id}</td>
+                                        <td className="px-6 py-4 text-sm text-slate-600">{order.customer}</td>
+                                        <td className="px-6 py-4 text-sm text-slate-600">{order.date}</td>
+                                        <td className="px-6 py-4 text-sm font-bold text-slate-900">{order.total}</td>
+                                        <td className="px-6 py-4">
+                                            <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                                                order.status === 'Delivered' ? 'bg-emerald-50 text-emerald-600' : 
+                                                order.status === 'Shipped' ? 'bg-blue-50 text-blue-600' : 'bg-orange-50 text-orange-600'
+                                            }`}>
+                                                {order.status}
+                                            </span>
+                                        </td>
+                                        <td className="px-6 py-4 text-right">
+                                            <button className="p-2 text-slate-400 hover:text-slate-900">
+                                                <MoreVertical size={16} />
                                             </button>
-                                        ) : r.day.includes("21/21") ? (
-                                            <span className="text-[10px] font-bold text-green-600">
-                                                ✅ Complete
-                                            </span>
-                                        ) : (
-                                            <span className="text-[10px] text-[#B5A642]">
-                                                {r.lastActive}
-                                            </span>
-                                        )}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {/* Top Products */}
-                    <div className="bg-white rounded-2xl border border-[#B5A642]/10 p-5">
-                        <h3 className="font-serif text-lg text-[#5D4037] mb-4">
-                            Top Products (This Week)
-                        </h3>
-                        <div className="space-y-3">
-                            {TOP_PRODUCTS.map((p, i) => (
-                                <div
-                                    key={p.name}
-                                    className="flex items-center justify-between p-3 rounded-xl bg-[#F9F6F0]"
-                                >
-                                    <div className="flex items-center gap-3">
-                                        <span className="w-6 h-6 bg-[#FF9933]/10 rounded-lg flex items-center justify-center text-xs font-bold text-[#FF9933]">
-                                            {i + 1}
-                                        </span>
-                                        <div>
-                                            <p className="text-sm font-medium text-[#5D4037]">{p.name}</p>
-                                            <p className="text-[10px] text-[#B5A642]">
-                                                {p.units} units sold
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <span className="text-sm font-bold text-[#FF9933]">
-                                        {p.revenue}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Quick Actions */}
-                    <div className="bg-white rounded-2xl border border-[#B5A642]/10 p-5">
-                        <h3 className="font-serif text-lg text-[#5D4037] mb-4">
-                            Quick Actions
-                        </h3>
-                        <div className="grid grid-cols-2 gap-3">
-                            {[
-                                { label: "Add Product", icon: Package, href: "/admin/products" },
-                                { label: "Edit Remedy", icon: Flame, href: "/admin/rituals" },
-                                { label: "View Customers", icon: Users, href: "/admin/customers" },
-                                { label: "Generate Coupon", icon: IndianRupee, href: "/admin/settings" },
-                            ].map(({ label, icon: Icon, href }) => (
-                                <a
-                                    key={label}
-                                    href={href}
-                                    className="flex items-center gap-3 p-4 rounded-xl border border-[#B5A642]/10 hover:border-[#FF9933]/30 hover:bg-[#FF9933]/5 transition-all"
-                                >
-                                    <Icon size={18} className="text-[#B5A642]" />
-                                    <span className="text-sm text-[#5D4037] font-medium">
-                                        {label}
-                                    </span>
-                                    <ArrowUpRight size={12} className="text-[#B5A642] ml-auto" />
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </AdminShell>
+            </main>
+        </div>
     );
+}
+
+function LayoutDashboard({ size }: { size: number }) {
+  return <TrendingUp size={size} />;
 }

@@ -5,6 +5,7 @@ import { ShoppingBag, Menu, X, Search } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
     { name: "Home", href: "/" },
@@ -17,6 +18,10 @@ const navLinks = [
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
     const { totalItems } = useCart();
+    const pathname = usePathname();
+
+    const isInternal = pathname.startsWith("/admin");
+    if (isInternal) return null;
 
     return (
         <>
@@ -26,10 +31,10 @@ export default function Header() {
                         {/* Logo */}
                         <Link href="/" className="flex items-center gap-2">
                             <div className="w-8 h-8 bg-[#FF9933] rounded-full flex items-center justify-center">
-                                <span className="text-white font-serif font-bold text-sm">A</span>
+                                <span className="text-white font-serif font-bold text-sm">S</span>
                             </div>
                             <span className="text-xl md:text-2xl font-serif font-bold text-[#5D4037] tracking-tight">
-                                Antigravity
+                                Satvik Home
                             </span>
                         </Link>
 
@@ -46,8 +51,14 @@ export default function Header() {
                             ))}
                         </nav>
 
-                        {/* Right Icons */}
+                         {/* Right Icons */}
                         <div className="flex items-center gap-4">
+                            <Link
+                                href="/login"
+                                className="hidden md:flex items-center gap-2 px-4 py-2 border border-[#B5A642]/30 text-[#5D4037] rounded-xl font-medium text-xs hover:border-[#FF9933] hover:text-[#FF9933] transition-all"
+                            >
+                                Login
+                            </Link>
                             <button className="hidden md:flex p-2 text-[#5D4037]/70 hover:text-[#FF9933] transition-colors">
                                 <Search size={20} />
                             </button>
