@@ -1,12 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // Disable Image Optimization (Required for compatibility)
-    images: {
-        unoptimized: true,
-    },
-    
-    // Ensure trailing slashes for cleaner URLs
-    trailingSlash: true,
+  // Disable Image Optimization (Required for Vercel/Static compatibility)
+  images: {
+    unoptimized: true,
+  },
+  
+  // Clean URL handling without subfolder basePath
 };
 
 export default nextConfig;

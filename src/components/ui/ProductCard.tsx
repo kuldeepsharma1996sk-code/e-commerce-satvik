@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ShoppingBag, Star } from "lucide-react";
+import { useState } from "react";
 import Link from "next/link";
 import { Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
@@ -13,13 +14,14 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, index = 0 }: ProductCardProps) {
     const { addItem } = useCart();
+    const [imageError, setImageError] = useState(false);
 
     return (
         <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="group relative bg-white/60 rounded-3xl overflow-hidden border border-[#B5A642]/10 hover:border-[#B5A642]/30 hover:shadow-xl transition-all duration-500"
+            className="group relative bg-white rounded-3xl overflow-hidden border border-[#B5A642]/10 hover:border-[#B5A642]/30 hover:shadow-xl transition-all duration-500"
         >
             {/* Badge */}
             {product.badge && (
@@ -37,14 +39,22 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
                 </div>
             )}
 
-            {/* Image */}
+            {/* Image SECTION with Fallback */}
             <Link href={`/collection/${product.slug}`}>
-                <div className="relative h-56 md:h-64 bg-gradient-to-br from-[#F9F6F0] to-[#E8E2D6] flex items-center justify-center overflow-hidden">
-                    <div className="w-32 h-32 md:w-40 md:h-40 bg-[#C2B280]/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-700">
-                        <span className="text-4xl md:text-5xl font-serif text-[#C2B280]/60">
-                            {product.name.charAt(0)}
-                        </span>
-                    </div>
+                <div className="relative h-56 md:h-64 bg-stone-100 flex items-center justify-center overflow-hidden">
+                    {product.mainImage && !imageError ? (
+                        <img 
+                            src={product.mainImage} 
+                            alt={product.name}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                            onError={() => setImageError(true)}
+                        />
+                    ) : (
+                        <div className="text-center p-4">
+                            <span className="text-[#FF9933] text-[10px] uppercase tracking-[0.3em] font-black">Satvik Home</span>
+                            <p className="text-slate-400 text-[10px] mt-2 italic font-serif">Sacred Image Arriving Soon</p>
+                        </div>
+                    )}
                     {/* Hover overlay */}
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-500" />
                 </div>
@@ -60,10 +70,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
                         {product.name}
                     </h3>
                 </Link>
-                <p className="text-xs text-[#5D4037]/50 mt-1 line-clamp-2">
-                    {product.shortDescription}
-                </p>
-
+                
                 {/* Rating */}
                 <div className="flex items-center gap-1 mt-2">
                     <Star size={12} className="text-[#FF9933] fill-[#FF9933]" />
@@ -89,7 +96,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
                     </div>
                     <button
                         onClick={() => addItem(product)}
-                        className="p-2.5 rounded-xl bg-[#FF9933]/10 text-[#FF9933] hover:bg-[#FF9933] hover:text-white transition-all duration-300"
+                        className="p-2.5 rounded-xl bg-[#FF9933]/10 text-[#FF9933] hover:bg-[#FF9933] hover:text-white transition-all duration-300 shadow-sm"
                     >
                         <ShoppingBag size={16} />
                     </button>
