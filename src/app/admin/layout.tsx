@@ -36,13 +36,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const pathname = usePathname();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
+    const isAdminLogin = pathname.startsWith("/admin/login");
+
     useEffect(() => {
-        if (!user?.isAdmin && pathname !== "/admin/login") {
+        if (!user?.isAdmin && !isAdminLogin) {
             router.push("/admin/login");
         }
-    }, [user, router, pathname]);
+    }, [user, router, pathname, isAdminLogin]);
 
-    if (pathname === "/admin/login") return <>{children}</>;
+    if (isAdminLogin) return <>{children}</>;
     if (!user?.isAdmin) return null;
 
     return (
