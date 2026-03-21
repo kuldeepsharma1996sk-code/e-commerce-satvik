@@ -145,92 +145,27 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ======== FEATURED PRODUCTS ======== */}
-      <section className="py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div {...fadeInUp} className="flex justify-between items-end mb-12">
-            <div>
-              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-[#B5A642]">
-                Curated for You
-              </span>
-              <h2 className="text-3xl md:text-5xl font-serif text-[#5D4037] mt-3">
-                Bestsellers
-              </h2>
-            </div>
-            <Link
-              href="/collection"
-              className="hidden md:flex items-center gap-2 text-sm font-semibold text-[#FF9933] hover:text-[#e68a2e] transition-colors"
-            >
-              View All <ArrowRight size={16} />
-            </Link>
-          </motion.div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {featuredProducts.map((product, i) => (
-              <ProductCard key={product.id} product={product} index={i} />
-            ))}
+      {/* ======== COMING SOON SECTION ======== */}
+      <section className="bg-stone-50 border border-stone-200 rounded-3xl p-8 md:p-16 my-16 text-center shadow-sm max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl mx-auto">
+          <span className="text-orange-600 font-medium tracking-widest uppercase text-sm">
+            Coming Soon
+          </span>
+          <h2 className="text-3xl md:text-5xl font-serif text-stone-800 mt-2 mb-4">
+            Handcrafted Ritual Essentials
+          </h2>
+          <p className="text-stone-600 leading-relaxed italic text-lg">
+            "True purity begins with the right intentions and the finest tools."
+          </p>
+          <div className="mt-8 flex justify-center gap-4">
+            <div className="h-1.5 w-16 bg-orange-200 rounded-full"></div>
+            <div className="h-1.5 w-16 bg-orange-400 rounded-full"></div>
+            <div className="h-1.5 w-16 bg-orange-200 rounded-full"></div>
           </div>
-
-          <div className="mt-8 text-center md:hidden">
-            <Link
-              href="/collection"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#FF9933]"
-            >
-              View All Products <ArrowRight size={16} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ======== RITUAL KITS ======== */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-white/50 to-ivory">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div {...fadeInUp} className="text-center mb-12">
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-[#B5A642]">
-              Save More, Pray More
-            </span>
-            <h2 className="text-3xl md:text-5xl font-serif text-[#5D4037] mt-3">
-              Ritual Kits
-            </h2>
-            <p className="text-[#5D4037]/60 mt-3 max-w-lg mx-auto">
-              Thoughtfully bundled essentials for every ritual. Each kit is
-              curated by temple priests for the perfect pooja experience.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {ritualKits.map((kit, i) => (
-              <RitualKitCard key={kit.id} kit={kit} index={i} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ======== NEW ARRIVALS ======== */}
-      <section className="py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div {...fadeInUp} className="flex justify-between items-end mb-12">
-            <div>
-              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-[#B5A642]">
-                Just Arrived
-              </span>
-              <h2 className="text-3xl md:text-5xl font-serif text-[#5D4037] mt-3">
-                New & Exclusive
-              </h2>
-            </div>
-            <Link
-              href="/collection"
-              className="hidden md:flex items-center gap-2 text-sm font-semibold text-[#FF9933] hover:text-[#e68a2e]"
-            >
-              View All <ArrowRight size={16} />
-            </Link>
-          </motion.div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {newArrivals.map((product, i) => (
-              <ProductCard key={product.id} product={product} index={i} />
-            ))}
-          </div>
+          <p className="mt-8 text-stone-500 text-sm md:text-base">
+            We are currently curating our collection of authentic brass and copper items. 
+            Check back shortly to start your 21-day journey.
+          </p>
         </div>
       </section>
 
