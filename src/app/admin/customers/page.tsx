@@ -1,181 +1,173 @@
 "use client";
 
-import AdminShell from "@/components/admin/AdminShell";
-import { Search, AlertTriangle, CheckCircle2, MessageSquare, Filter } from "lucide-react";
 import { useState } from "react";
+import { 
+  Users, 
+  Search, 
+  Filter, 
+  MoreVertical, 
+  Mail, 
+  Phone, 
+  Star, 
+  Clock, 
+  ShoppingBag,
+  Sparkles,
+  ShieldCheck,
+  ChevronRight,
+  UserPlus
+} from "lucide-react";
+import { motion } from "framer-motion";
 
-const CUSTOMERS = [
-    { id: "USR-001", name: "Satvik Sharma", email: "satvik@example.com", ritual: "Dhan Vriddhi", day: 18, total: 21, missed: false, lastActive: "Today", orders: 3, ltv: "₹8,795" },
-    { id: "USR-002", name: "Kavita Rai", email: "kavita@example.com", ritual: "Dhan Vriddhi", day: 9, total: 21, missed: true, lastActive: "3 days ago", orders: 1, ltv: "₹2,499" },
-    { id: "USR-003", name: "Amit Patel", email: "amit@example.com", ritual: "Dhan Vriddhi", day: 21, total: 21, missed: false, lastActive: "Today", orders: 5, ltv: "₹14,200" },
-    { id: "USR-004", name: "Deepa Menon", email: "deepa@example.com", ritual: "Dhan Vriddhi", day: 5, total: 21, missed: true, lastActive: "2 days ago", orders: 2, ltv: "₹4,298" },
-    { id: "USR-005", name: "Rajesh Kumar", email: "rajesh@example.com", ritual: "Dhan Vriddhi", day: 14, total: 21, missed: false, lastActive: "Yesterday", orders: 4, ltv: "₹11,000" },
-    { id: "USR-006", name: "Sunita Devi", email: "sunita@example.com", ritual: null, day: 0, total: 0, missed: false, lastActive: "1 week ago", orders: 1, ltv: "₹799" },
+const customers = [
+    { id: "C-1042", name: "Rajesh S.", email: "rajesh@example.com", phone: "+91 98765 43210", ltv: "₹42,500", segment: "Ritual Day 14", status: "Active", risk: "Low" },
+    { id: "C-1039", name: "Priya V.", email: "priya.v@example.com", phone: "+91 91234 56789", ltv: "₹12,200", segment: "Home Altar Enthusiast", status: "Active", risk: "Low" },
+    { id: "C-1035", name: "Vikram K.", email: "vik.k@example.com", phone: "+91 99887 76655", ltv: "₹8,500", segment: "New Opt-in", status: "Idle", risk: "Medium" },
+    { id: "C-1032", name: "Anjali M.", email: "anjali@example.com", phone: "+91 91122 33445", ltv: "₹2,10,000", segment: "VVIP Collector", status: "Active", risk: "None" },
 ];
 
-export default function CustomersAdmin() {
-    const [search, setSearch] = useState("");
-    const [filter, setFilter] = useState<"all" | "active" | "missed" | "completed">("all");
-
-    const filtered = CUSTOMERS.filter((c) => {
-        const matchSearch =
-            c.name.toLowerCase().includes(search.toLowerCase()) ||
-            c.email.toLowerCase().includes(search.toLowerCase());
-
-        if (filter === "active") return matchSearch && c.ritual && c.day < c.total && !c.missed;
-        if (filter === "missed") return matchSearch && c.missed;
-        if (filter === "completed") return matchSearch && c.day === c.total && c.total > 0;
-        return matchSearch;
-    });
-
+export default function AdminCustomersPage() {
     return (
-        <AdminShell>
-            <div className="space-y-6">
-                <div className="flex items-center justify-between">
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            {/* Header */}
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                <div>
+                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Customer CRM Console</h1>
+                    <p className="text-slate-500 text-sm mt-1">360° profiles, segmentation, and relationship lifecycle tracking.</p>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                    <button className="px-6 py-3 bg-white border border-slate-200 text-slate-900 rounded-2xl font-bold hover:bg-slate-50 transition-all shadow-sm flex items-center gap-2">
+                        <Mail size={18} /> Bulk Campaign
+                    </button>
+                    <button className="px-6 py-3 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/10 flex items-center gap-2">
+                        <UserPlus size={18} /> Add New Profile
+                    </button>
+                </div>
+            </div>
+
+            {/* Segment Summaries */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-5">
+                    <div className="w-14 h-14 bg-indigo-50 text-indigo-500 rounded-2xl flex items-center justify-center font-bold">
+                        <Star size={24} />
+                    </div>
                     <div>
-                        <h1 className="text-2xl font-serif text-[#5D4037]">
-                            Seva — Customer CRM
-                        </h1>
-                        <p className="text-xs text-[#B5A642]">
-                            Track ritual progress, attendance, and customer lifetime value
-                        </p>
+                        <p className="text-2xl font-bold text-slate-900">42</p>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">VVIP Collectors</p>
                     </div>
-                    <div className="text-right hidden sm:block">
-                        <p className="text-2xl font-bold text-[#FF9933]">{CUSTOMERS.length}</p>
-                        <p className="text-[10px] text-[#B5A642] uppercase">Total Users</p>
+                </div>
+                
+                <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-5">
+                    <div className="w-14 h-14 bg-[#FF9933]/10 text-[#FF9933] rounded-2xl flex items-center justify-center font-bold">
+                        <Sparkles size={24} />
+                    </div>
+                    <div>
+                        <p className="text-2xl font-bold text-slate-900">128</p>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Active Ritualists</p>
                     </div>
                 </div>
 
-                {/* Attendance Summary Cards */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    {[
-                        { label: "Active Rituals", count: CUSTOMERS.filter((c) => c.ritual && c.day < c.total).length, color: "text-[#FF9933]", bg: "bg-[#FF9933]/10" },
-                        { label: "Missed (48h)", count: CUSTOMERS.filter((c) => c.missed).length, color: "text-red-500", bg: "bg-red-50" },
-                        { label: "Completed", count: CUSTOMERS.filter((c) => c.day === c.total && c.total > 0).length, color: "text-green-600", bg: "bg-green-50" },
-                        { label: "No Ritual", count: CUSTOMERS.filter((c) => !c.ritual).length, color: "text-[#B5A642]", bg: "bg-[#B5A642]/10" },
-                    ].map((stat) => (
-                        <div
-                            key={stat.label}
-                            className="bg-white rounded-xl border border-[#B5A642]/10 p-4 text-center"
-                        >
-                            <p className={`text-2xl font-bold ${stat.color}`}>{stat.count}</p>
-                            <p className="text-[10px] text-[#B5A642] uppercase tracking-wider mt-1">
-                                {stat.label}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-
-                {/* Search + Filter */}
-                <div className="flex gap-3">
-                    <div className="relative flex-1">
-                        <Search
-                            size={16}
-                            className="absolute left-4 top-1/2 -translate-y-1/2 text-[#B5A642]"
-                        />
-                        <input
-                            type="text"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search customers..."
-                            className="w-full pl-11 pr-4 py-3 bg-white border border-[#B5A642]/10 rounded-xl text-sm text-[#5D4037] focus:outline-none focus:border-[#FF9933]"
-                        />
+                <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-5">
+                    <div className="w-14 h-14 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center font-bold">
+                        <ShoppingBag size={24} />
                     </div>
-                    <select
-                        value={filter}
-                        onChange={(e) => setFilter(e.target.value as typeof filter)}
-                        className="px-4 py-3 bg-white border border-[#B5A642]/10 rounded-xl text-sm text-[#5D4037] focus:outline-none focus:border-[#FF9933]"
-                    >
-                        <option value="all">All Users</option>
-                        <option value="active">Active Rituals</option>
-                        <option value="missed">Missed (48h+)</option>
-                        <option value="completed">Completed</option>
-                    </select>
+                    <div>
+                        <p className="text-2xl font-bold text-slate-900">845</p>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Total Profiles</p>
+                    </div>
                 </div>
 
-                {/* Customer Table */}
-                <div className="bg-white rounded-2xl border border-[#B5A642]/10 overflow-hidden">
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-sm">
-                            <thead>
-                                <tr className="text-[10px] text-[#B5A642] uppercase tracking-wider border-b border-[#B5A642]/10 bg-[#F9F6F0]">
-                                    <th className="text-left p-4 font-semibold">Customer</th>
-                                    <th className="text-left p-4 font-semibold hidden md:table-cell">Ritual</th>
-                                    <th className="text-center p-4 font-semibold">Progress</th>
-                                    <th className="text-center p-4 font-semibold hidden sm:table-cell">Status</th>
-                                    <th className="text-right p-4 font-semibold hidden lg:table-cell">LTV</th>
-                                    <th className="text-right p-4 font-semibold">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filtered.map((c) => (
-                                    <tr
-                                        key={c.id}
-                                        className={`border-b border-[#B5A642]/5 last:border-0 ${c.missed ? "bg-red-50/30" : ""
-                                            }`}
-                                    >
-                                        <td className="p-4">
-                                            <p className="font-medium text-[#5D4037]">{c.name}</p>
-                                            <p className="text-[10px] text-[#B5A642]">{c.email}</p>
-                                        </td>
-                                        <td className="p-4 text-[#5D4037]/60 hidden md:table-cell">
-                                            {c.ritual || "—"}
-                                        </td>
-                                        <td className="p-4">
-                                            {c.total > 0 ? (
-                                                <div className="flex items-center justify-center gap-2">
-                                                    <div className="w-20 h-1.5 bg-[#B5A642]/10 rounded-full overflow-hidden">
-                                                        <div
-                                                            className="h-full bg-[#FF9933] rounded-full"
-                                                            style={{ width: `${(c.day / c.total) * 100}%` }}
-                                                        />
-                                                    </div>
-                                                    <span className="text-xs text-[#5D4037] font-medium">
-                                                        {c.day}/{c.total}
-                                                    </span>
-                                                </div>
-                                            ) : (
-                                                <span className="text-xs text-[#B5A642]/40">N/A</span>
-                                            )}
-                                        </td>
-                                        <td className="p-4 text-center hidden sm:table-cell">
-                                            {c.missed ? (
-                                                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-red-500 bg-red-50 px-2 py-1 rounded-full">
-                                                    <AlertTriangle size={10} /> Missed
-                                                </span>
-                                            ) : c.day === c.total && c.total > 0 ? (
-                                                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full">
-                                                    <CheckCircle2 size={10} /> Complete
-                                                </span>
-                                            ) : c.ritual ? (
-                                                <span className="text-[10px] text-[#B5A642]">
-                                                    Active • {c.lastActive}
-                                                </span>
-                                            ) : (
-                                                <span className="text-[10px] text-[#B5A642]/40">—</span>
-                                            )}
-                                        </td>
-                                        <td className="p-4 text-right font-semibold text-[#FF9933] hidden lg:table-cell">
-                                            {c.ltv}
-                                        </td>
-                                        <td className="p-4 text-right">
-                                            {c.missed ? (
-                                                <button className="flex items-center gap-1.5 text-[10px] font-bold text-green-600 bg-green-50 px-3 py-1.5 rounded-lg hover:bg-green-100 transition-colors ml-auto">
-                                                    <MessageSquare size={12} /> WhatsApp
-                                                </button>
-                                            ) : (
-                                                <button className="text-[#B5A642] hover:text-[#FF9933] p-1.5 ml-auto block">
-                                                    <Filter size={14} />
-                                                </button>
-                                            )}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-5">
+                    <div className="w-14 h-14 bg-slate-50 text-slate-400 rounded-2xl flex items-center justify-center font-bold">
+                        <Clock size={24} />
+                    </div>
+                    <div>
+                        <p className="text-2xl font-bold text-slate-900">3d</p>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Avg Login Gap</p>
                     </div>
                 </div>
             </div>
-        </AdminShell>
+
+            {/* List Console */}
+            <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+                <div className="p-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="relative flex-1">
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                        <input 
+                            type="text" 
+                            placeholder="Search by Name, Email, or Segment..." 
+                            className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:border-slate-300 font-medium transition-all"
+                        />
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <button className="px-6 py-3 bg-white border border-slate-200 rounded-2xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm border-slate-200">
+                            <Filter size={18} /> Active Segments
+                        </button>
+                    </div>
+                </div>
+                
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left">
+                        <thead className="bg-slate-50/50">
+                            <tr>
+                                <th className="px-8 py-5 text-xs font-bold text-slate-400 uppercase tracking-widest leading-none">Profile Info</th>
+                                <th className="px-8 py-5 text-xs font-bold text-slate-400 uppercase tracking-widest leading-none">Segment</th>
+                                <th className="px-8 py-5 text-xs font-bold text-slate-400 uppercase tracking-widest leading-none">LTV</th>
+                                <th className="px-8 py-5 text-xs font-bold text-slate-400 uppercase tracking-widest leading-none">Chrun Risk</th>
+                                <th className="px-8 py-5 text-xs font-bold text-slate-400 uppercase tracking-widest leading-none">Action Logs</th>
+                                <th className="px-8 py-5"></th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100">
+                            {customers.map((customer) => (
+                                <tr key={customer.id} className="hover:bg-slate-50/50 transition-colors group">
+                                    <td className="px-8 py-5">
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400 border border-slate-200 font-bold group-hover:bg-white group-hover:scale-110 transition-all group-hover:shadow-lg group-hover:shadow-slate-200/50">
+                                                {customer.name.charAt(0)}
+                                            </div>
+                                            <div>
+                                                <div className="text-sm font-bold text-slate-900">{customer.name}</div>
+                                                <div className="text-[10px] text-slate-400 uppercase tracking-widest mt-0.5">{customer.id}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className="px-8 py-5">
+                                        <span className={`px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                                            customer.segment.includes('VVIP') ? 'bg-indigo-50 text-indigo-600 border border-indigo-100' : 
+                                            customer.segment.includes('Ritual') ? 'bg-orange-50 text-orange-600 border border-orange-100' : ''
+                                        }`}>
+                                            {customer.segment}
+                                        </span>
+                                    </td>
+                                    <td className="px-8 py-5 text-sm font-bold text-slate-900">{customer.ltv}</td>
+                                    <td className="px-8 py-5">
+                                        <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                                            customer.risk === 'Low' || customer.risk === 'None' ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'
+                                        }`}>
+                                            {customer.risk}
+                                        </span>
+                                    </td>
+                                    <td className="px-8 py-5">
+                                        <div className="flex flex-col gap-1">
+                                            <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                                                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
+                                                Last Activity: 2h ago
+                                            </div>
+                                            <div className="text-xs text-slate-400">Changed ritual preference</div>
+                                        </div>
+                                    </td>
+                                    <td className="px-8 py-5 text-right">
+                                        <button className="flex items-center gap-2 ml-auto p-3 bg-slate-900 text-white hover:bg-slate-800 rounded-xl text-xs font-bold transition-all shadow-xl shadow-slate-900/10">
+                                            Profile 360° <ChevronRight size={14} strokeWidth={3} />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     );
 }
